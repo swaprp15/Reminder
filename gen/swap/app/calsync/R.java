@@ -32,9 +32,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int ic_action_add=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
+        public static final int action_add=0x7f090006;
         public static final int action_settings=0x7f090005;
         public static final int dummy_button=0x7f090002;
         public static final int editText1=0x7f090003;
@@ -53,6 +55,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int main_activity_actions=0x7f080002;
     }
     public static final class string {
+        public static final int action_add=0x7f060009;
         public static final int action_settings=0x7f060004;
         public static final int app_name=0x7f060000;
         public static final int button_send=0x7f060007;
