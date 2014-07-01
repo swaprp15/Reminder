@@ -1,2 +1,2 @@
-Birthday
+Reminder
 ========
