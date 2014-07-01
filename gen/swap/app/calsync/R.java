@@ -50,6 +50,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class menu {
         public static final int display_message=0x7f080000;
         public static final int main=0x7f080001;
+        public static final int main_activity_actions=0x7f080002;
     }
     public static final class string {
         public static final int action_settings=0x7f060004;
