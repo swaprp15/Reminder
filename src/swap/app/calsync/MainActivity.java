@@ -66,9 +66,10 @@ public class MainActivity extends Activity {
 	
 	public void addBirthday()
 	{
+		Intent intent = new Intent(this, AddBirthdayActivity.class);
+		startActivity(intent);
 
-
-		
+		/*
         popUp = new PopupWindow(this);
         layout = new LinearLayout(this);
         mainLayout = new LinearLayout(this);
@@ -98,6 +99,8 @@ public class MainActivity extends Activity {
         // popUp.showAtLocation(layout, Gravity.BOTTOM, 10, 10);
         mainLayout.addView(but, params);
         setContentView(mainLayout);
+		*/
+	
 	}
 
 }

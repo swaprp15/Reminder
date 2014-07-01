@@ -36,6 +36,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="swap.app.calsync.MainActivity" />
         </activity>
+        <activity
+            android:name="swap.app.calsync.AddBirthdayActivity"
+            android:label="@string/title_activity_add_birthday"
+            android:parentActivityName="swap.app.calsync.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="swap.app.calsync.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

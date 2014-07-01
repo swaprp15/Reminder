@@ -10,5 +10,7 @@
     <string name="edit_message">please type in</string>
     <string name="button_send">Send</string>
     <string name="title_activity_display_message">My Message</string>
-	<string name="action_add">Add</string>
+    <string name="action_add">Add</string>
+    <string name="title_activity_add_birthday">AddBirthdayActivity</string>
+
 </resources>
