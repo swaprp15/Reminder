@@ -48,6 +48,7 @@
         android:layout_alignBaseline="@+id/buttonCancel"
         android:layout_alignBottom="@+id/buttonCancel"
         android:layout_alignLeft="@+id/textName"
+        android:onClick="addBirthday"
         android:text="Add" />
 
     <Button

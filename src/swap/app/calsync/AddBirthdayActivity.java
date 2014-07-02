@@ -2,9 +2,12 @@ package swap.app.calsync;
 
 import java.util.Calendar;
 
+import swap.app.calsync.DBHelperContract.FeedEntry;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -40,7 +43,7 @@ class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDa
 		
 		EditText editDate = (EditText) activity.findViewById(R.id.editDate);
 		
-		editDate.setText(day + "-" + month + "-" + year);
+		editDate.setText(day + "/" + month + "/" + year);
 		
 	}
 }
@@ -92,6 +95,33 @@ public class AddBirthdayActivity extends FragmentActivity {
 	{
 		DialogFragment newFragment = new DatePickerFragment();
 	    newFragment.show(getSupportFragmentManager(), "datePicker");
+	}
+	
+	public void addBirthday(View view)
+	{
+		DBHelper mDbHelper = new DBHelper(getApplicationContext());
+		
+		System.out.println("Created database");
+		
+		// Gets the data repository in write mode
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+		EditText editDate = (EditText) findViewById(R.id.editDate);
+		EditText editName = (EditText) findViewById(R.id.editName);
+		
+		// Create a new map of values, where column names are the keys
+		ContentValues values = new ContentValues();
+		values.put(FeedEntry.COLUMN_NAME, editName.getText().toString());
+		values.put(FeedEntry.COLUMN_DATE, editDate.getText().toString());
+
+		// Insert the new row, returning the primary key value of the new row
+		long newRowId;
+		newRowId = db.insert(
+		         FeedEntry.TABLE_NAME,
+		         "null",
+		         values);
+		
+		System.out.println("Added a birthday for " + editName.toString());
 	}
 
 }

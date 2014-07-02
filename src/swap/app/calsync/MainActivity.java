@@ -1,13 +1,14 @@
 package swap.app.calsync;
 
+import swap.app.calsync.DBHelperContract.FeedEntry;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,6 +33,40 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		// Read from DB
+		
+		DBHelper mDbHelper = new DBHelper(getApplicationContext());
+		
+		SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+		// Define a projection that specifies which columns from the database
+		// you will actually use after this query.
+		String[] projection = {
+		    FeedEntry.COLUMN_NAME,
+		    FeedEntry.COLUMN_DATE
+		    };
+
+		// How you want the results sorted in the resulting Cursor
+		String sortOrder =
+		    FeedEntry.COLUMN_NAME + " DESC";
+
+		Cursor cursor = db.query(
+		    FeedEntry.TABLE_NAME,  // The table to query
+		    projection,                               // The columns to return
+		    null,                                // The columns for the WHERE clause
+		    null,                            // The values for the WHERE clause
+		    null,                                     // don't group the rows
+		    null,                                     // don't filter by row groups
+		    sortOrder                                 // The sort order
+		    );
+		
+		while(cursor.moveToNext())
+		{
+			System.out.println("From DB - Name - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
+			System.out.println("From DB - Date - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DATE)));
+		}
+		
 	}
 
 	@Override
