@@ -1,7 +1,10 @@
 package swap.app.calsync;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import swap.app.calsync.DBHelperContract.FeedEntry;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,14 +12,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ListActivity {
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     
@@ -29,10 +33,10 @@ public class MainActivity extends Activity {
     Button but;
     boolean click = true;
 	
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		//setContentView(R.layout.activity_main);
 		
 		// Read from DB
 		
@@ -61,12 +65,23 @@ public class MainActivity extends Activity {
 		    sortOrder                                 // The sort order
 		    );
 		
+		ArrayList<String> records = new ArrayList<String>();
+		
 		while(cursor.moveToNext())
 		{
+			records.add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DATE)));
+			
 			System.out.println("From DB - Name - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
 			System.out.println("From DB - Date - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DATE)));
 		}
 		
+		
+		String [] data = records.toArray(new String[records.size()]);
+		
+		setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data));
+		
+		ListView listView = getListView();
+		listView.setTextFilterEnabled(true);
 	}
 
 	@Override
@@ -80,11 +95,12 @@ public class MainActivity extends Activity {
 	    // Do something in response to button
 		
 		Intent intent = new Intent(this, DisplayMessageActivity.class);
-		EditText editText = (EditText) findViewById(R.id.edit_message);
-		String message = editText.getText().toString();
-		intent.putExtra(EXTRA_MESSAGE, message);
+		//ListView listView = (ListView) findViewById(R.id.);
 		
-		startActivity(intent);
+//		String message = editText.getText().toString();
+//		intent.putExtra(EXTRA_MESSAGE, message);
+//		
+//		startActivity(intent);
 	}
 	
 	@Override
