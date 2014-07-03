@@ -1,30 +1,34 @@
 package swap.app.calsync;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import swap.app.calsync.DBHelperContract.FeedEntry;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.FeatureInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-public class MainActivity extends ListActivity {
+
+
+public class MainActivity extends Activity {
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     
+	SparseArray<Group> groups = new SparseArray<Group>();
+
+	String monthsArr[] = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	
 	PopupWindow popUp;
 	LinearLayout layout;
@@ -46,11 +50,9 @@ public class MainActivity extends ListActivity {
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main);
 		
 		//dropTable();
-		
-		System.out.println("Dropped table.");
 		
 		// Read from DB
 		
@@ -81,11 +83,29 @@ public class MainActivity extends ListActivity {
 		    sortOrder                                 // The sort order
 		    );
 		
-		ArrayList<String> records = new ArrayList<String>();
+		List<ArrayList<String>> records = new ArrayList<ArrayList<String>>();
+		
+		for(int i = 0; i < 13; i++)
+		{
+			records.add(new ArrayList<String>());
+			
+			System.out.println("Added record - " + i);
+		}
+		
+		System.out.println("Initialised...");
+		
+		int month;
 		
 		while(cursor.moveToNext())
 		{
-			records.add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH)));
+			month = cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH));
+			
+			if(records.get(month) == null)
+			{
+				records.add(month, new ArrayList<String>());
+			}
+			
+			records.get(month).add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + month );
 			
 			System.out.println("From DB - Name - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
 			System.out.println("From DB - Date - " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH)));
@@ -93,16 +113,56 @@ public class MainActivity extends ListActivity {
 		
 		
 		
-		String [] data = records.toArray(new String[records.size()]);
+		//String [] data = records.toArray(new String[records.size()]);
 		
+		int count = 0;
+		
+		for(int i = 1; i < 13; i++)
+		{
+			System.out.println("in loop i=" + i);
+			
+			Group group = new Group(monthsArr[i]);
+			
+			System.out.println("Month - " + monthsArr[i]);
+			
+	          for (int j = 0; j < records.get(i).size(); j++) {
+	        	  System.out.println("In loop j = " + j);
+	            group.children.add(records.get(i).get(j));
+	          }
+	          
+	          if(records.get(i).size() > 0)
+	        	  groups.append(count++, group);
+		}
+	
+		System.out.println("Filled Groups");
+		
+		//createData();
+	    ExpandableListView listView = (ExpandableListView) findViewById(R.id.expandableListView1);
+	    MyExpandableListAdapter adapter = new MyExpandableListAdapter(this,
+	        groups);
+	    listView.setAdapter(adapter);
+		
+		
+		/*
 		setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data));
 		
 		ListView listView = getListView();
 		listView.setTextFilterEnabled(true);
-		
+		*/
 		
 	
-	}
+	
+    }
+    
+    public void createData() {
+        for (int j = 0; j < 5; j++) {
+          Group group = new Group("Test " + j);
+          for (int i = 0; i < 5; i++) {
+            group.children.add("Sub Item" + i);
+          }
+          groups.append(j, group);
+        }
+      }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -68,7 +68,7 @@ class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDa
 		
 		EditText editDate = (EditText) activity.findViewById(R.id.editDate);
 		
-		editDate.setText(day + "/" + month + "/" + year);
+		editDate.setText(day + "/" + ++month + "/" + year);
 		
 	}
 }
