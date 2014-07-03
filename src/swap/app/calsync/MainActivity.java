@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import swap.app.calsync.DBHelperContract.FeedEntry;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.pm.FeatureInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -33,10 +34,23 @@ public class MainActivity extends ListActivity {
     Button but;
     boolean click = true;
 	
+    public void dropTable()
+    {
+		DBHelper mDbHelper = new DBHelper(getApplicationContext());
+		
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+    	
+    	db.execSQL(DBHelperContract.SQL_DROP_TABLE);
+    }
+    
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
+		
+		//dropTable();
+		
+		System.out.println("Dropped table.");
 		
 		// Read from DB
 		
@@ -48,13 +62,15 @@ public class MainActivity extends ListActivity {
 		// you will actually use after this query.
 		String[] projection = {
 		    FeedEntry.COLUMN_NAME,
-		    FeedEntry.COLUMN_DATE
+		    FeedEntry.COLUMN_MONTH,
+		    FeedEntry.COLUMN_DAY
 		    };
 
 		// How you want the results sorted in the resulting Cursor
-		String sortOrder =
-		    FeedEntry.COLUMN_NAME + " DESC";
+		String sortOrder = FeedEntry.COLUMN_MONTH + " ASC, " + FeedEntry.COLUMN_DAY + " ASC";
 
+		
+		
 		Cursor cursor = db.query(
 		    FeedEntry.TABLE_NAME,  // The table to query
 		    projection,                               // The columns to return
@@ -69,11 +85,12 @@ public class MainActivity extends ListActivity {
 		
 		while(cursor.moveToNext())
 		{
-			records.add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DATE)));
+			records.add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH)));
 			
 			System.out.println("From DB - Name - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
-			System.out.println("From DB - Date - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DATE)));
+			System.out.println("From DB - Date - " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH)));
 		}
+		
 		
 		
 		String [] data = records.toArray(new String[records.size()]);
@@ -82,6 +99,9 @@ public class MainActivity extends ListActivity {
 		
 		ListView listView = getListView();
 		listView.setTextFilterEnabled(true);
+		
+		
+	
 	}
 
 	@Override

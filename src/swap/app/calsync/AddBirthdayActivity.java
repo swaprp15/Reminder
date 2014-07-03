@@ -1,8 +1,10 @@
 package swap.app.calsync;
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
 
 import swap.app.calsync.DBHelperContract.FeedEntry;
+import android.R.bool;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +31,28 @@ class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDa
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH);
 		int day = c.get(Calendar.DAY_OF_MONTH);
+		
+		// Didn't work
+		try {
+	        Field f[] = this.getClass().getDeclaredFields();
+	        for (Field field : f) {
+	            if (field.getName().equals("mYearPicker") || field.getName().equals("mYearSpinner")) {
+	                field.setAccessible(true);
+	                Object yearPicker = new Object();
+	                yearPicker = field.get(this);
+	                ((View) yearPicker).setVisibility(View.GONE);
+	            }
+	        }
+	    } 
+	    catch (SecurityException e) {
+	        Log.d("ERROR", e.getMessage());
+	    } 
+	    catch (IllegalArgumentException e) {
+	        Log.d("ERROR", e.getMessage());
+	    } 
+	    catch (IllegalAccessException e) {
+	        Log.d("ERROR", e.getMessage());
+	    }
 		
 		// Create a new instance of DatePickerDialog and return it
 		return new DatePickerDialog(getActivity(), this, year, month, day);
@@ -97,22 +122,31 @@ public class AddBirthdayActivity extends FragmentActivity {
 	    newFragment.show(getSupportFragmentManager(), "datePicker");
 	}
 	
+	
+	
 	public void addBirthday(View view)
 	{
 		DBHelper mDbHelper = new DBHelper(getApplicationContext());
 		
-		System.out.println("Created database");
+		
 		
 		// Gets the data repository in write mode
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
+		System.out.println("Created database");
+		
 		EditText editDate = (EditText) findViewById(R.id.editDate);
 		EditText editName = (EditText) findViewById(R.id.editName);
+		
+		DayMonth dayMonth = new DayMonth();
+		
+		GetDayMonth(editDate.getText().toString(), dayMonth);
 		
 		// Create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
 		values.put(FeedEntry.COLUMN_NAME, editName.getText().toString());
-		values.put(FeedEntry.COLUMN_DATE, editDate.getText().toString());
+		values.put(FeedEntry.COLUMN_MONTH, dayMonth.getMonth());
+		values.put(FeedEntry.COLUMN_DAY, dayMonth.getDay());
 
 		// Insert the new row, returning the primary key value of the new row
 		long newRowId;
@@ -124,4 +158,41 @@ public class AddBirthdayActivity extends FragmentActivity {
 		System.out.println("Added a birthday for " + editName.toString());
 	}
 
+	
+	public boolean GetDayMonth(String date, DayMonth obj)
+	{
+		String [] parts = date.split("[//|-]");
+		
+		if(parts.length < 2)
+		{
+			return false;
+		}
+		
+		obj.setDay(Integer.parseInt(parts[0]));
+		obj.setMonth(Integer.parseInt(parts[1]));
+	
+		return true;
+	}
+}
+
+class DayMonth
+{
+	int day, month;
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+	
 }
