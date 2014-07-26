@@ -1,7 +1,12 @@
 Show month wise
 Show notifications
+	Call directly from notification
 FB Sync
 Google Sync
 Call or msg
 Show age
 
+I learnt
+How to properly design your app
+keeping things separate
+Async architecture

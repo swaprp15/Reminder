@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -18,11 +19,14 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
+import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
 
 
 public class MainActivity extends Activity {
+	
+	private SQLiteDatabase db;
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     
@@ -38,6 +42,11 @@ public class MainActivity extends Activity {
     Button but;
     boolean click = true;
 	
+    public SQLiteDatabase getReadableDaabase()
+    {
+    	return db;
+    }
+    
     public void dropTable()
     {
 		DBHelper mDbHelper = new DBHelper(getApplicationContext());
@@ -58,7 +67,7 @@ public class MainActivity extends Activity {
 		
 		DBHelper mDbHelper = new DBHelper(getApplicationContext());
 		
-		SQLiteDatabase db = mDbHelper.getReadableDatabase();
+		 db = mDbHelper.getReadableDatabase();
 
 		// Define a projection that specifies which columns from the database
 		// you will actually use after this query.
@@ -71,7 +80,7 @@ public class MainActivity extends Activity {
 		// How you want the results sorted in the resulting Cursor
 		String sortOrder = FeedEntry.COLUMN_MONTH + " ASC, " + FeedEntry.COLUMN_DAY + " ASC";
 
-		
+
 		
 		Cursor cursor = db.query(
 		    FeedEntry.TABLE_NAME,  // The table to query
@@ -136,7 +145,12 @@ public class MainActivity extends Activity {
 	
 		System.out.println("Filled Groups");
 		
+		//SimpleExpandableListAdapter adapter = new SimpleExpandableListAdapter(context, groupData, expandedGroupLayout, collapsedGroupLayout, groupFrom, groupTo, childData, childLayout, childFrom, childTo)
+		
+		
 		//createData();
+		// * 
+		// * With a single text view for child
 	    ExpandableListView listView = (ExpandableListView) findViewById(R.id.expandableListView1);
 	    MyExpandableListAdapter adapter = new MyExpandableListAdapter(this,
 	        groups);
@@ -150,7 +164,15 @@ public class MainActivity extends Activity {
 		listView.setTextFilterEnabled(true);
 		*/
 		
-	
+	    
+	    // To test creating  service here
+	    // Remove from here and do at the device startup
+	    // http://stackoverflow.com/questions/2974276/run-my-application-in-background-when-i-start-device-power-on-in-android
+	    Intent mServiceIntent = new Intent(this, BackgroundService.class);
+	    mServiceIntent.setData(Uri.parse("Dummy"));
+	    // Make db helper parceable
+	    //mServiceIntent.putExtra("sqliteDatabase", db);
+	    this.startService(mServiceIntent);
 	
     }
     
