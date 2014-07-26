@@ -35,6 +35,7 @@ public class CheckForBirthday extends Application implements Runnable {
 		
 		int month = c.get(Calendar.MONTH);
 		int day = c.get(Calendar.DATE);
+		month++;
 		
 		Toast.makeText(MyApp.getInstance().getApplicationContext(), "Checking for " + day + "/" + month , Toast.LENGTH_LONG).show(); // For example
         
@@ -45,44 +46,64 @@ public class CheckForBirthday extends Application implements Runnable {
 		*/
 		// Here check for any birthdays today and give notifications
 		
-		DBHelper mDbHelper = new DBHelper(MyApp.getInstance().getApplicationContext());
-		
-		SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-		// Define a projection that specifies which columns from the database
-		// you will actually use after this query.
-		String[] projection = {
-		    FeedEntry.COLUMN_NAME,
-		    FeedEntry.COLUMN_MONTH,
-		    FeedEntry.COLUMN_DAY
-		    };
-
-		String whereCols = FeedEntry.COLUMN_MONTH + " == ?" + " AND " +  FeedEntry.COLUMN_DAY + " == ?";
-		String[] whereValues = { Integer.toString(month), Integer.toString(day) };
-		
-		String sortOrder = FeedEntry.COLUMN_NAME;
-		
-		Cursor cursor = db.query(
-			    FeedEntry.TABLE_NAME,  // The table to query
-			    projection,                               // The columns to return
-			    whereCols,                                // The columns for the WHERE clause
-			    whereValues,                            // The values for the WHERE clause
-			    null,                                     // don't group the rows
-			    null,                                     // don't filter by row groups
-			    sortOrder                                 // The sort order
-			    );
-		
-		NotificationBuilder builder = new NotificationBuilder();
-		
-		while(cursor.moveToNext())
+		try
 		{
-			System.out.println(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
+		
+			DBHelper mDbHelper = new DBHelper(MyApp.getInstance().getApplicationContext());
 			
-			String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME));
-			String text = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " has birthday today!";
+			SQLiteDatabase db = mDbHelper.getReadableDatabase();
+	
+			// Define a projection that specifies which columns from the database
+			// you will actually use after this query.
+			String[] projection = {
+			    FeedEntry.COLUMN_NAME,
+			    FeedEntry.COLUMN_MONTH,
+			    FeedEntry.COLUMN_DAY
+			    };
+	
+			String whereCols = FeedEntry.COLUMN_MONTH + " == ?" + " AND " +  FeedEntry.COLUMN_DAY + " == ?";
+			String[] whereValues = { Integer.toString(month), Integer.toString(day) };
 			
-			builder.BuildNotification(title, text);
+			Toast.makeText(MyApp.getInstance().getApplicationContext(), "Before query" , Toast.LENGTH_LONG).show(); // For example
+			
+			
+			String sortOrder = FeedEntry.COLUMN_NAME;
+			
+			Cursor cursor = db.query(
+				    FeedEntry.TABLE_NAME,  // The table to query
+				    projection,                               // The columns to return
+				    whereCols,                                // The columns for the WHERE clause
+				    whereValues,                            // The values for the WHERE clause
+				    null,                                     // don't group the rows
+				    null,                                     // don't filter by row groups
+				    sortOrder                                 // The sort order
+				    );
+			
+			Toast.makeText(MyApp.getInstance().getApplicationContext(), "Before instantiating NB" , Toast.LENGTH_LONG).show(); // For example
+			
+			
+			NotificationBuilder builder = new NotificationBuilder();
+			
+			Toast.makeText(MyApp.getInstance().getApplicationContext(), "Executed" , Toast.LENGTH_LONG).show(); // For example
+			
+			
+			while(cursor.moveToNext())
+			{
+				System.out.println(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
+				
+				Toast.makeText(MyApp.getInstance().getApplicationContext(), cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " has Birthday" , Toast.LENGTH_LONG).show(); // For example
+				
+				String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME));
+				String text = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " has birthday today!";
+				
+				builder.BuildNotification(title, text);
+			}
 		}
-	}
+		catch(Exception e)
+		{
+			Toast.makeText(MyApp.getInstance().getApplicationContext(),  e.getMessage() , Toast.LENGTH_LONG).show(); // For example
+			
+		}
+		}
 
 }

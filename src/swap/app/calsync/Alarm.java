@@ -47,7 +47,10 @@ public class Alarm extends BroadcastReceiver
      c.set(Calendar.MILLISECOND, 0);
      
      // every 24 hours // 1000 * 60 * 60 * 24
-     am.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 1000 * 60 * 60 * 24 , pi); // Millisec * Second * Minute
+     //am.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 1000 * 60 * 60 * 24 , pi); // Millisec * Second * Minute
+     
+     am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 20, pi); // Millisec * Second * Minute
+
  }
 
  public void CancelAlarm(Context context)
