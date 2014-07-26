@@ -31,7 +31,6 @@ public class BackgroundService extends IntentService {
 		
 		// Here create an instance of ScheduledExecutorService and run it every day 7 am
 		
-		/*
 		Calendar c = Calendar.getInstance(); 
 		int hourOfTheDay = c.get(Calendar.HOUR_OF_DAY);
 	
@@ -51,8 +50,10 @@ public class BackgroundService extends IntentService {
 		// Schedule activity at 7 am daily
 		// Can provide customised option and use it as an offset
 		scheduler.scheduleAtFixedRate(checkBirthdays, delayInHours, 24, TimeUnit.HOURS);
-		*/
 		
+		System.out.println("DelayInHours = " + delayInHours);
+		
+		/*
 		System.out.println("In background service onHandleIntent");
 		intent.getData();
 		
@@ -60,7 +61,7 @@ public class BackgroundService extends IntentService {
 		CheckForBirthday checkBirthdays = new CheckForBirthday();
 		
 		scheduler.scheduleAtFixedRate(checkBirthdays, 10, 10, TimeUnit.SECONDS);
-		
+		*/
 	}
 
 }

@@ -10,3 +10,5 @@ I learnt
 How to properly design your app
 keeping things separate
 Async architecture
+
+First used service but then AlarmManager

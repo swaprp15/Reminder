@@ -11,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 public class CheckForBirthday extends Application implements Runnable {
 
@@ -18,18 +19,30 @@ public class CheckForBirthday extends Application implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		
+		checkAndNotifyBirthday();
+		
+	}
+	
+	public void checkAndNotifyBirthday()
+	{
+		
+		System.out.println("In check for birthday");
+		
 		Calendar c = Calendar.getInstance(); 
 		
 		System.out.println(c.get(Calendar.SECOND));
 		
-		/*
+		
 		int month = c.get(Calendar.MONTH);
 		int day = c.get(Calendar.DATE);
-		*/
 		
+		Toast.makeText(MyApp.getInstance().getApplicationContext(), "Checking for " + day + "/" + month , Toast.LENGTH_LONG).show(); // For example
+        
+		
+		/*
 		int month = 1;
 		int day = 1;
-		
+		*/
 		// Here check for any birthdays today and give notifications
 		
 		DBHelper mDbHelper = new DBHelper(MyApp.getInstance().getApplicationContext());
@@ -70,7 +83,6 @@ public class CheckForBirthday extends Application implements Runnable {
 			
 			builder.BuildNotification(title, text);
 		}
-		
 	}
 
 }
