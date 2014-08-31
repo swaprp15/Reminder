@@ -23,6 +23,10 @@ Call directly from notification
 
 Can notify few days before.... so we can add settings for that as well..
 
+cutomised time for notification - either gloabal (instead of 12) or  user specific
+
+change the resolution of the notification image
+
 Colors
 -C9C9C9 gray
 
