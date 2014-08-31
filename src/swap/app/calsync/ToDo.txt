@@ -1,6 +1,4 @@
-Show month wise
-Show notifications
-	Call directly from notification
+
 FB Sync
 Google Sync
 Call or msg
@@ -12,3 +10,21 @@ keeping things separate
 Async architecture
 
 First used service but then AlarmManager
+
+To Do tasks-
+
+Error handling - invalid date
+
+On cancel - it should return back and update the main page.
+
+when pressed back should update the main page.
+
+Can notify few days before.... so we can add settings for that as well..
+
+Call directly from notification
+
+A good UI.. for main page...
+
+Give proper toasts when user doesn't do it as it has to be like didn't enter the date or name but still add pressed
+
+When an app is installed first time there should not be need to restart the phone in order to start notifications..
