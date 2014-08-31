@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.SimpleExpandableListAdapter;
@@ -84,6 +85,9 @@ public class MainActivity extends Activity {
     
     public static void fetchBirthdays()
     {
+    	try
+    	{
+    	
     	// Define a projection that specifies which columns from the database
     			// you will actually use after this query.
     			String[] projection = {
@@ -123,6 +127,10 @@ public class MainActivity extends Activity {
     			while(cursor.moveToNext())
     			{
     				month = cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH));
+    				
+    				// Skipping any mischeivious entry in the database which could cause array out of bound exception
+    				if(month > 12)
+    					continue;
     				
     				if(records.get(month) == null)
     				{
@@ -192,6 +200,12 @@ public class MainActivity extends Activity {
     		    //mServiceIntent.putExtra("sqliteDatabase", db);
     		    this.startService(mServiceIntent);
     			*/
+    		    
+    	}
+    	catch(Exception e)
+    	{
+    		Toast.makeText(instance, "Failed to fetch birthdays", Toast.LENGTH_LONG).show();
+    	}
     }
     
     

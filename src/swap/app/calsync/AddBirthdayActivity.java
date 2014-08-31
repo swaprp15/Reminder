@@ -143,7 +143,11 @@ public class AddBirthdayActivity extends FragmentActivity {
 		
 		DayMonth dayMonth = new DayMonth();
 		
-		GetDayMonth(editDate.getText().toString(), dayMonth);
+		if(!GetDayMonth(editDate.getText().toString(), dayMonth))
+		{
+			Toast.makeText(this, "Invalid date", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		
 		// Create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
@@ -190,24 +194,45 @@ public class AddBirthdayActivity extends FragmentActivity {
 		Intent resultIntent = new Intent();
 		setResult(RESULT_OK, resultIntent);
 		finish();
-		
-		
-        
+		        
 	}
 	
+	// Verify date and return values
 	public boolean GetDayMonth(String date, DayMonth obj)
 	{
-		String [] parts = date.split("[//|-]");
+		try
+		{
 		
-		if(parts.length < 2)
+			String [] parts = date.split("[//|-]");
+			
+			if(parts.length < 2)
+			{
+				return false;
+			}
+			
+			int day = Integer.parseInt(parts[0]);
+			int month = Integer.parseInt(parts[1]);		
+			
+			if(day < 0 || day > 31 || month < 0 || month > 12)
+				return false;
+			
+			// February
+			if(month == 2 && day > 29)
+				return false;
+			
+			if( (month == 4 || month == 6 || month == 9 || month == 11) && day > 30 )
+				return false;
+				
+			
+			obj.setDay(day);
+			obj.setMonth(month);
+		
+			return true;
+		}
+		catch(Exception e)
 		{
 			return false;
 		}
-		
-		obj.setDay(Integer.parseInt(parts[0]));
-		obj.setMonth(Integer.parseInt(parts[1]));
-	
-		return true;
 	}
 }
 
