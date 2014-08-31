@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
@@ -159,6 +161,39 @@ public class AddBirthdayActivity extends FragmentActivity {
 		System.out.println("Added a birthday for " + editName.toString());
 	}
 
+	
+	public void onCancel(View view)
+	{
+		// Can check for flag if atleast one birthday was added.. if no then dont call this. 
+		MainActivity.fetchBirthdays();
+		this.finish();
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		//Toast.makeText(this, "Back pressed", Toast.LENGTH_LONG).show();
+		
+		// Can check for flag if atleast one birthday was added.. if no then dont call this.
+		MainActivity.fetchBirthdays();
+		
+		/*
+		finish();
+		
+		Intent mainIntent = new Intent(this, MainActivity.class);
+        Bundle bundleObj = new Bundle();
+        mainIntent.putExtras(bundleObj);
+        startActivityForResult(mainIntent, 0);
+        */
+		
+		
+		Intent resultIntent = new Intent();
+		setResult(RESULT_OK, resultIntent);
+		finish();
+		
+		
+        
+	}
 	
 	public boolean GetDayMonth(String date, DayMonth obj)
 	{

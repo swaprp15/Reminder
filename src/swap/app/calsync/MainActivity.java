@@ -26,13 +26,17 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
-	private SQLiteDatabase db;
+	private static SQLiteDatabase db;
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     
-	SparseArray<Group> groups = new SparseArray<Group>();
+	static SparseArray<Group> groups = new SparseArray<Group>();
 
-	String monthsArr[] = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	static String monthsArr[] = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	
+	static ExpandableListView listView;
+	
+	static Activity instance;
 	
 	PopupWindow popUp;
 	LinearLayout layout;
@@ -69,116 +73,125 @@ public class MainActivity extends Activity {
 		
 		 db = mDbHelper.getReadableDatabase();
 
-		// Define a projection that specifies which columns from the database
-		// you will actually use after this query.
-		String[] projection = {
-		    FeedEntry.COLUMN_NAME,
-		    FeedEntry.COLUMN_MONTH,
-		    FeedEntry.COLUMN_DAY
-		    };
-
-		// How you want the results sorted in the resulting Cursor
-		String sortOrder = FeedEntry.COLUMN_MONTH + " ASC, " + FeedEntry.COLUMN_DAY + " ASC";
-
-
 		
-		Cursor cursor = db.query(
-		    FeedEntry.TABLE_NAME,  // The table to query
-		    projection,                               // The columns to return
-		    null,                                // The columns for the WHERE clause
-		    null,                            // The values for the WHERE clause
-		    null,                                     // don't group the rows
-		    null,                                     // don't filter by row groups
-		    sortOrder                                 // The sort order
-		    );
-		
-		List<ArrayList<String>> records = new ArrayList<ArrayList<String>>();
-		
-		for(int i = 0; i < 13; i++)
-		{
-			records.add(new ArrayList<String>());
-			
-			System.out.println("Added record - " + i);
-		}
-		
-		System.out.println("Initialised...");
-		
-		int month;
-		
-		while(cursor.moveToNext())
-		{
-			month = cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH));
-			
-			if(records.get(month) == null)
-			{
-				records.add(month, new ArrayList<String>());
-			}
-			
-			records.get(month).add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + month );
-			
-			System.out.println("From DB - Name - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
-			System.out.println("From DB - Date - " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH)));
-		}
-		
-		
-		
-		//String [] data = records.toArray(new String[records.size()]);
-		
-		int count = 0;
-		
-		for(int i = 1; i < 13; i++)
-		{
-			System.out.println("in loop i=" + i);
-			
-			Group group = new Group(monthsArr[i]);
-			
-			System.out.println("Month - " + monthsArr[i]);
-			
-	          for (int j = 0; j < records.get(i).size(); j++) {
-	        	  System.out.println("In loop j = " + j);
-	            group.children.add(records.get(i).get(j));
-	          }
-	          
-	          if(records.get(i).size() > 0)
-	        	  groups.append(count++, group);
-		}
+		 listView = (ExpandableListView) findViewById(R.id.expandableListView1);
+		 
+		 instance = this;
+		 
+		 fetchBirthdays();
 	
-		System.out.println("Filled Groups");
-		
-		//SimpleExpandableListAdapter adapter = new SimpleExpandableListAdapter(context, groupData, expandedGroupLayout, collapsedGroupLayout, groupFrom, groupTo, childData, childLayout, childFrom, childTo)
-		
-		
-		//createData();
-		// * 
-		// * With a single text view for child
-	    ExpandableListView listView = (ExpandableListView) findViewById(R.id.expandableListView1);
-	    MyExpandableListAdapter adapter = new MyExpandableListAdapter(this,
-	        groups);
-	    listView.setAdapter(adapter);
-		
-		
-		/*
-		setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data));
-		
-		ListView listView = getListView();
-		listView.setTextFilterEnabled(true);
-		*/
-		
-	    
-	    // To test creating  service here
-	    // Remove from here and do at the device startup
-	    // http://stackoverflow.com/questions/2974276/run-my-application-in-background-when-i-start-device-power-on-in-android
-	    
-	    /* Not needed anymore
-	    
-	    Intent mServiceIntent = new Intent(this, BackgroundService.class);
-	    mServiceIntent.setData(Uri.parse("Dummy"));
-	    // Make db helper parceable
-	    //mServiceIntent.putExtra("sqliteDatabase", db);
-	    this.startService(mServiceIntent);
-		*/
-	
-	
+    }
+    
+    public static void fetchBirthdays()
+    {
+    	// Define a projection that specifies which columns from the database
+    			// you will actually use after this query.
+    			String[] projection = {
+    			    FeedEntry.COLUMN_NAME,
+    			    FeedEntry.COLUMN_MONTH,
+    			    FeedEntry.COLUMN_DAY
+    			    };
+
+    			// How you want the results sorted in the resulting Cursor
+    			String sortOrder = FeedEntry.COLUMN_MONTH + " ASC, " + FeedEntry.COLUMN_DAY + " ASC";
+
+
+    			
+    			Cursor cursor = db.query(
+    			    FeedEntry.TABLE_NAME,  // The table to query
+    			    projection,                               // The columns to return
+    			    null,                                // The columns for the WHERE clause
+    			    null,                            // The values for the WHERE clause
+    			    null,                                     // don't group the rows
+    			    null,                                     // don't filter by row groups
+    			    sortOrder                                 // The sort order
+    			    );
+    			
+    			List<ArrayList<String>> records = new ArrayList<ArrayList<String>>();
+    			
+    			for(int i = 0; i < 13; i++)
+    			{
+    				records.add(new ArrayList<String>());
+    				
+    				System.out.println("Added record - " + i);
+    			}
+    			
+    			System.out.println("Initialised...");
+    			
+    			int month;
+    			
+    			while(cursor.moveToNext())
+    			{
+    				month = cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH));
+    				
+    				if(records.get(month) == null)
+    				{
+    					records.add(month, new ArrayList<String>());
+    				}
+    				
+    				records.get(month).add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + month );
+    				
+    				System.out.println("From DB - Name - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
+    				System.out.println("From DB - Date - " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH)));
+    			}
+    			
+    			
+    			
+    			//String [] data = records.toArray(new String[records.size()]);
+    			
+    			int count = 0;
+    			
+    			for(int i = 1; i < 13; i++)
+    			{
+    				System.out.println("in loop i=" + i);
+    				
+    				Group group = new Group(monthsArr[i]);
+    				
+    				System.out.println("Month - " + monthsArr[i]);
+    				
+    		          for (int j = 0; j < records.get(i).size(); j++) {
+    		        	  System.out.println("In loop j = " + j);
+    		            group.children.add(records.get(i).get(j));
+    		          }
+    		          
+    		          if(records.get(i).size() > 0)
+    		        	  groups.append(count++, group);
+    			}
+    		
+    			System.out.println("Filled Groups");
+    			
+    			//SimpleExpandableListAdapter adapter = new SimpleExpandableListAdapter(context, groupData, expandedGroupLayout, collapsedGroupLayout, groupFrom, groupTo, childData, childLayout, childFrom, childTo)
+    			
+    			
+    			//createData();
+    			// * 
+    			// * With a single text view for child
+    		    
+    		    MyExpandableListAdapter adapter = new MyExpandableListAdapter(instance,
+    		        groups);
+    		    listView.setAdapter(adapter);
+    			
+    			
+    			/*
+    			setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data));
+    			
+    			ListView listView = getListView();
+    			listView.setTextFilterEnabled(true);
+    			*/
+    			
+    		    
+    		    // To test creating  service here
+    		    // Remove from here and do at the device startup
+    		    // http://stackoverflow.com/questions/2974276/run-my-application-in-background-when-i-start-device-power-on-in-android
+    		    
+    		    /* Not needed anymore
+    		    
+    		    Intent mServiceIntent = new Intent(this, BackgroundService.class);
+    		    mServiceIntent.setData(Uri.parse("Dummy"));
+    		    // Make db helper parceable
+    		    //mServiceIntent.putExtra("sqliteDatabase", db);
+    		    this.startService(mServiceIntent);
+    			*/
     }
     
     
@@ -226,7 +239,7 @@ public class MainActivity extends Activity {
 	public void addBirthday()
 	{
 		Intent intent = new Intent(this, AddBirthdayActivity.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 
 		/*
         popUp = new PopupWindow(this);
