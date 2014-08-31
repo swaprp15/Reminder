@@ -3,6 +3,12 @@ Application context
 Activity
 SQLiteOpenHelper
 
+UI alignment is all relative
+
+using XAML like concept
+
+layout_width="match_parent" etc	
+
 http://www.tutorialspoint.com/
 
 http://www.vogella.com/tutorials
