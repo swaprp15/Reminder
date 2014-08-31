@@ -137,7 +137,21 @@ public class MainActivity extends Activity {
     					records.add(month, new ArrayList<String>());
     				}
     				
-    				records.get(month).add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + month );
+    				int day = cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY));
+    				
+    				String dayString;
+    				
+    				if(day == 1 || day == 21 || day == 31)
+    					dayString = day + "st";
+    				else if (day == 2 || day == 22)
+    					dayString = day + "nd";
+    				else if(day == 3 || day == 23)
+    					dayString = day + "rd";
+    				else
+    					dayString = day + "th";
+    				
+    				
+    				records.get(month).add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + dayString );
     				
     				System.out.println("From DB - Name - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
     				System.out.println("From DB - Date - " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH)));
