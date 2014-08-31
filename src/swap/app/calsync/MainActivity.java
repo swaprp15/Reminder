@@ -168,13 +168,19 @@ public class MainActivity extends Activity {
 	    // To test creating  service here
 	    // Remove from here and do at the device startup
 	    // http://stackoverflow.com/questions/2974276/run-my-application-in-background-when-i-start-device-power-on-in-android
+	    
+	    /* Not needed anymore
+	    
 	    Intent mServiceIntent = new Intent(this, BackgroundService.class);
 	    mServiceIntent.setData(Uri.parse("Dummy"));
 	    // Make db helper parceable
 	    //mServiceIntent.putExtra("sqliteDatabase", db);
 	    this.startService(mServiceIntent);
+		*/
+	
 	
     }
+    
     
     public void createData() {
         for (int j = 0; j < 5; j++) {

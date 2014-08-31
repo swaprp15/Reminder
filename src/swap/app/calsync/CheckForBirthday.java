@@ -94,14 +94,21 @@ public class CheckForBirthday extends Application implements Runnable {
 				Toast.makeText(MyApp.getInstance().getApplicationContext(), cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " has Birthday" , Toast.LENGTH_LONG).show(); // For example
 				
 				String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME));
-				String text = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " has birthday today!";
+				String text = "has birthday today!";
 				
 				builder.BuildNotification(title, text);
 			}
+			
+			cursor.close();
+			mDbHelper.close();
 		}
 		catch(Exception e)
 		{
 			Toast.makeText(MyApp.getInstance().getApplicationContext(),  e.getMessage() , Toast.LENGTH_LONG).show(); // For example
+			
+		}
+		finally
+		{
 			
 		}
 		}

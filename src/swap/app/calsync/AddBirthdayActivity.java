@@ -4,12 +4,12 @@ import java.lang.reflect.Field;
 import java.util.Calendar;
 
 import swap.app.calsync.DBHelperContract.FeedEntry;
-import android.R.bool;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -80,7 +80,8 @@ public class AddBirthdayActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_birthday);
 		// Show the Up button in the action bar.
-		setupActionBar();
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			setupActionBar();
 	}
 
 	/**
