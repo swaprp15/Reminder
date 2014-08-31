@@ -37,7 +37,7 @@ public class CheckForBirthday extends Application implements Runnable {
 		int day = c.get(Calendar.DATE);
 		month++;
 		
-		Toast.makeText(MyApp.getInstance().getApplicationContext(), "Checking for " + day + "/" + month , Toast.LENGTH_LONG).show(); // For example
+		//Toast.makeText(MyApp.getInstance().getApplicationContext(), "Checking for " + day + "/" + month , Toast.LENGTH_LONG).show(); // For example
         
 		
 		/*
@@ -64,7 +64,7 @@ public class CheckForBirthday extends Application implements Runnable {
 			String whereCols = FeedEntry.COLUMN_MONTH + " == ?" + " AND " +  FeedEntry.COLUMN_DAY + " == ?";
 			String[] whereValues = { Integer.toString(month), Integer.toString(day) };
 			
-			Toast.makeText(MyApp.getInstance().getApplicationContext(), "Before query" , Toast.LENGTH_LONG).show(); // For example
+			//Toast.makeText(MyApp.getInstance().getApplicationContext(), "Before query" , Toast.LENGTH_LONG).show(); // For example
 			
 			
 			String sortOrder = FeedEntry.COLUMN_NAME;
@@ -79,19 +79,19 @@ public class CheckForBirthday extends Application implements Runnable {
 				    sortOrder                                 // The sort order
 				    );
 			
-			Toast.makeText(MyApp.getInstance().getApplicationContext(), "Before instantiating NB" , Toast.LENGTH_LONG).show(); // For example
+			//Toast.makeText(MyApp.getInstance().getApplicationContext(), "Before instantiating NB" , Toast.LENGTH_LONG).show(); // For example
 			
 			
 			NotificationBuilder builder = new NotificationBuilder();
 			
-			Toast.makeText(MyApp.getInstance().getApplicationContext(), "Executed" , Toast.LENGTH_LONG).show(); // For example
+			//Toast.makeText(MyApp.getInstance().getApplicationContext(), "Executed" , Toast.LENGTH_LONG).show(); // For example
 			
 			
 			while(cursor.moveToNext())
 			{
 				System.out.println(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
 				
-				Toast.makeText(MyApp.getInstance().getApplicationContext(), cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " has Birthday" , Toast.LENGTH_LONG).show(); // For example
+				//Toast.makeText(MyApp.getInstance().getApplicationContext(), cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " has Birthday" , Toast.LENGTH_LONG).show(); // For example
 				
 				String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME));
 				String text = "has birthday today!";
@@ -104,7 +104,7 @@ public class CheckForBirthday extends Application implements Runnable {
 		}
 		catch(Exception e)
 		{
-			Toast.makeText(MyApp.getInstance().getApplicationContext(),  e.getMessage() , Toast.LENGTH_LONG).show(); // For example
+			Toast.makeText(MyApp.getInstance().getApplicationContext(),  "Error!" , Toast.LENGTH_LONG).show(); // For example
 			
 		}
 		finally

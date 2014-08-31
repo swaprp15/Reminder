@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+		instance = this;
 		//dropTable();
 		
 		// Read from DB
@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
 		
 		 listView = (ExpandableListView) findViewById(R.id.expandableListView1);
 		 
-		 instance = this;
+		 
 		 
 		 fetchBirthdays();
 	
@@ -128,7 +128,7 @@ public class MainActivity extends Activity {
     			{
     				month = cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH));
     				
-    				// Skipping any mischeivious entry in the database which could cause array out of bound exception
+    				// Skipping any mischievous entry in the database which could cause array out of bound exception
     				if(month > 12)
     					continue;
     				

@@ -141,11 +141,17 @@ public class AddBirthdayActivity extends FragmentActivity {
 		EditText editDate = (EditText) findViewById(R.id.editDate);
 		EditText editName = (EditText) findViewById(R.id.editName);
 		
+		if(editName.getText().toString() == null || editName.getText().toString().isEmpty())
+		{
+			Toast.makeText(this, "Please enter a valid name", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
 		DayMonth dayMonth = new DayMonth();
 		
 		if(!GetDayMonth(editDate.getText().toString(), dayMonth))
 		{
-			Toast.makeText(this, "Invalid date", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		

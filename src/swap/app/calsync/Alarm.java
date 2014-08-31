@@ -21,7 +21,7 @@ public class Alarm extends BroadcastReceiver
          wl.acquire();
 
          // Put here YOUR code.
-         Toast.makeText(context, "Alarm !!!!!!!!!!", Toast.LENGTH_LONG).show(); // For example
+         //Toast.makeText(context, "Alarm !!!!!!!!!!", Toast.LENGTH_LONG).show(); // For example
          
          CheckForBirthday checkBirthday = new CheckForBirthday();
          checkBirthday.checkAndNotifyBirthday();
