@@ -38,10 +38,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int notification_icon=0x7f020003;
     }
     public static final class id {
-        public static final int action_add=0x7f09000d;
-        public static final int action_settings=0x7f09000c;
+        public static final int LinearLayout01=0x7f09000b;
+        public static final int action_add=0x7f090011;
+        public static final int action_settings=0x7f09000f;
         public static final int buttonAdd=0x7f090003;
         public static final int buttonCancel=0x7f090004;
+        public static final int delete=0x7f090010;
         public static final int dummy_button=0x7f090008;
         public static final int editDate=0x7f090005;
         public static final int editName=0x7f090002;
@@ -51,27 +53,33 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int fullscreen_content_controls=0x7f090007;
         public static final int textDate=0x7f090001;
         public static final int textName=0x7f090000;
-        public static final int textView1=0x7f09000b;
+        public static final int textView1=0x7f09000e;
+        public static final int tvChild=0x7f09000c;
+        public static final int tvGroup=0x7f09000d;
     }
     public static final class layout {
         public static final int activity_add_birthday=0x7f030000;
         public static final int activity_display_message=0x7f030001;
         public static final int activity_fullscreen=0x7f030002;
         public static final int activity_main=0x7f030003;
-        public static final int listrow_details=0x7f030004;
-        public static final int listrow_group=0x7f030005;
+        public static final int child_layout=0x7f030004;
+        public static final int group_layout=0x7f030005;
+        public static final int listrow_details=0x7f030006;
+        public static final int listrow_group=0x7f030007;
     }
     public static final class menu {
         public static final int add_birthday=0x7f080000;
         public static final int display_message=0x7f080001;
-        public static final int main=0x7f080002;
-        public static final int main_activity_actions=0x7f080003;
+        public static final int edit_menu=0x7f080002;
+        public static final int main=0x7f080003;
+        public static final int main_activity_actions=0x7f080004;
     }
     public static final class string {
         public static final int action_add=0x7f060009;
         public static final int action_settings=0x7f060004;
         public static final int app_name=0x7f060000;
         public static final int button_send=0x7f060007;
+        public static final int delete_menu=0x7f06000b;
         public static final int dummy_button=0x7f060001;
         public static final int dummy_content=0x7f060002;
         public static final int edit_message=0x7f060006;

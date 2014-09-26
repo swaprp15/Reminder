@@ -3,19 +3,25 @@ package swap.app.calsync;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import swap.app.calsync.DBHelperContract.FeedEntry;
 import android.app.Activity;
+import android.app.ExpandableListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
@@ -25,17 +31,23 @@ import android.widget.TextView;
 
 
 
-public class MainActivity extends Activity {
+//public class MainActivity extends ExpandableListActivity 
+public class MainActivity extends Activity
+{
 	
 	private static SQLiteDatabase db;
+	
+	static MyExpandableListAdapter adapter;
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     
-	static SparseArray<Group> groups = new SparseArray<Group>();
+	static ArrayList<Group> groups = new ArrayList<Group>();
 
 	static String monthsArr[] = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	
 	static ExpandableListView listView;
+	
+	static TextView textViewInListView;
 	
 	static Activity instance;
 	
@@ -77,13 +89,75 @@ public class MainActivity extends Activity {
 		
 		 listView = (ExpandableListView) findViewById(R.id.expandableListView1);
 		 
+
+		 //listView.setChoiceMode(choiceMode)
 		 
+		 listView.setAdapter(adapter);
+		 
+		registerForContextMenu(listView);
 		 
 		 fetchBirthdays();
 	
     }
     
-    public static void fetchBirthdays()
+    @Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		// TODO Auto-generated method stub
+    	Log.i("", "Click");
+        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
+
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        int groupPosition = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        int childPosition = ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+        // Show context menu for groups
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+            menu.setHeaderTitle("Group");
+            menu.add(0, 0, 1, "Delete");
+
+            // Show context menu for children
+        } else if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+            menu.setHeaderTitle("Child");
+            menu.add(0, 0, 1, "Delete");
+        }
+	}
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) item
+                .getMenuInfo();
+
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        int groupPosition = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        int childPosition = ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+            // do something with parent
+
+        } else if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+            // do someting with child
+        	
+        	//Toast.makeText(this, item.getTitle() + " was selected", Toast.LENGTH_LONG).show();
+        	
+        	String childName = groups.get(groupPosition).children.get(childPosition);
+        	
+        	Toast.makeText(this, childName + " was long pressed.", Toast.LENGTH_LONG).show();
+        	
+        	/*
+        	TextView childView = (TextView) info.targetView;
+        	
+        	if(childView != null)
+        		Toast.makeText(this, childView.getText() + " was clicked.", Toast.LENGTH_LONG).show();
+        	else
+        		Toast.makeText(this, " Cant get view", Toast.LENGTH_LONG).show();
+        	 */
+        }
+
+        return super.onContextItemSelected(item);
+    }
+    
+	public static void fetchBirthdays()
     {
     	try
     	{
@@ -177,7 +251,8 @@ public class MainActivity extends Activity {
     		          }
     		          
     		          if(records.get(i).size() > 0)
-    		        	  groups.append(count++, group);
+    		        	  //groups.append(count++, group);
+    		        	  groups.add(group);
     			}
     		
     			System.out.println("Filled Groups");
@@ -189,10 +264,24 @@ public class MainActivity extends Activity {
     			// * 
     			// * With a single text view for child
     		    
-    		    MyExpandableListAdapter adapter = new MyExpandableListAdapter(instance,
+    		    adapter = new MyExpandableListAdapter(instance,
     		        groups);
-    		    listView.setAdapter(adapter);
-    			
+    		    
+    		    /*
+    			listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
+
+					@Override
+					public boolean onChildClick(ExpandableListView parent,
+							View view, int groupPosition, int childPosition, long id) {
+						// TODO Auto-generated method stub
+						
+						Toast.makeText(instance, "log pressed",Toast.LENGTH_LONG).show();
+							
+						return false;
+					}
+    				
+    			});
+    		    */
     			
     			/*
     			setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data));
@@ -229,7 +318,8 @@ public class MainActivity extends Activity {
           for (int i = 0; i < 5; i++) {
             group.children.add("Sub Item" + i);
           }
-          groups.append(j, group);
+          //groups.append(j, group);
+          groups.add(group);
         }
       }
 

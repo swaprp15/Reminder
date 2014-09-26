@@ -11,7 +11,26 @@ Async architecture
 
 First used service but then AlarmManager
 
+Done-
+Added successfully message
+
 To Do tasks-
+
+Delete record
+Date to the right
+Add call button
+Add age
+When clicked on notification should open up a dialog containing info like age, call button
+Add photo
+Add a widget
+Configurable days
+import/export
+
+FB Sync
+
+Birthday or Anniversary
+
+Instead of full date keep only month and date
 
 Put the date on the right side
 

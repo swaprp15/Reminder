@@ -169,6 +169,8 @@ public class AddBirthdayActivity extends FragmentActivity {
 		         values);
 		
 		System.out.println("Added a birthday for " + editName.toString());
+		
+		Toast.makeText(this, "Added successfully!", Toast.LENGTH_LONG).show();
 	}
 
 	
