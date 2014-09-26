@@ -110,14 +110,18 @@ public class MainActivity extends Activity
         int groupPosition = ExpandableListView.getPackedPositionGroup(info.packedPosition);
         int childPosition = ExpandableListView.getPackedPositionChild(info.packedPosition);
 
-        // Show context menu for groups
+        /*
+        // Don't Show context menu for groups
         if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
             menu.setHeaderTitle("Group");
             menu.add(0, 0, 1, "Delete");
 
             // Show context menu for children
-        } else if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-            menu.setHeaderTitle("Child");
+        } else 
+        	
+        */
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+            //menu.setHeaderTitle("Child");
             menu.add(0, 0, 1, "Delete");
         }
 	}
@@ -131,10 +135,14 @@ public class MainActivity extends Activity
         int groupPosition = ExpandableListView.getPackedPositionGroup(info.packedPosition);
         int childPosition = ExpandableListView.getPackedPositionChild(info.packedPosition);
 
+        /* No need
         if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
             // do something with parent
 
-        } else if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+        } else 
+        */	
+        	
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
             // do someting with child
         	
         	//Toast.makeText(this, item.getTitle() + " was selected", Toast.LENGTH_LONG).show();

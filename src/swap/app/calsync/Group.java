@@ -53,7 +53,7 @@ class Child
 		return day;
 	}
 	
-	public String getFormattedDayString(int day)
+	private String getFormattedDayString(int day)
 	{
 		String dayString;
 		
@@ -67,6 +67,11 @@ class Child
 			dayString = day + "th";
 		
 		return dayString;
+	}
+	
+	public String getFormattedDayString()
+	{
+		return getFormattedDayString(day);
 	}
 
 	@Override

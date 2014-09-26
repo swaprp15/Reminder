@@ -13,5 +13,8 @@
     <string name="action_add">Add</string>
     <string name="title_activity_add_birthday">Add a Birthday</string>
     <string name="delete_menu">Delete</string>
+    <string name="children_day">ChildrenDay</string>
+    <string name="children_name">ChildrenName</string>
+    
 
 </resources>

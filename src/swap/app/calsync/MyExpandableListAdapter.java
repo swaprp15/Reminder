@@ -68,8 +68,12 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.child_layout, null);
         }
-        TextView tv = (TextView) convertView.findViewById(R.id.tvChild);
-        tv.setText(children.toString());
+        TextView tvName = (TextView) convertView.findViewById(R.id.tvChild);
+        tvName.setText(children.getPersonName());
+        
+        TextView tvDay = (TextView) convertView.findViewById(R.id.tvChildDay);
+        tvDay.setText(children.getFormattedDayString());
+        
 
         return convertView;
     }
