@@ -2,6 +2,7 @@ package swap.app.calsync;
 
 import android.content.pm.FeatureInfo;
 import android.provider.BaseColumns;
+import android.util.MonthDisplayHelper;
 
 public final class DBHelperContract {
     // To prevent someone from accidentally instantiating the contract class,
@@ -21,14 +22,26 @@ public final class DBHelperContract {
 
     public static final String SQL_DROP_TABLE = "DROP TABLE " + FeedEntry.TABLE_NAME + ";";
     
-    public static final String SQL_DELETE_ENTRIES =
-        "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
+    public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
+    
     
     /* Inner class that defines the table contents */
-    public static abstract class FeedEntry implements BaseColumns {
+    public static abstract class FeedEntry implements BaseColumns 
+    {
         public static final String TABLE_NAME = "Birthday";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_MONTH = "month";
         public static final String COLUMN_DAY = "day";
+    }
+    
+    public static String getDeleteRowStatement(int month, int day, String name)
+    {
+    	String SQL_DELETE_ROW = 
+        		"DELETE FROM " + FeedEntry.TABLE_NAME + " " +
+        		"WHERE " + FeedEntry.COLUMN_MONTH + "=" + month + " AND " + 
+        		FeedEntry.COLUMN_DAY + "=" + day + " AND " + 
+        		FeedEntry.COLUMN_NAME + "='" + name + "';";
+    	
+    	return SQL_DELETE_ROW;
     }
 }

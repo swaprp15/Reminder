@@ -143,8 +143,24 @@ public class MainActivity extends Activity
         	
         	 Child child = groups.get(groupPosition).children.get(childPosition);
         	 
-        	Toast.makeText(this, child.getPersonName() + " " + group.getMonth() + " was long pressed.", Toast.LENGTH_LONG).show();
+        	//Toast.makeText(this, child.getPersonName() + " " + group.getMonth() + " was long pressed.", Toast.LENGTH_LONG).show();
         	
+        	// Delete the entry
+        	
+        	try
+        	{
+        		//Toast.makeText(instance, "Trying to delete", Toast.LENGTH_SHORT);
+        		
+        		db.execSQL(DBHelperContract.getDeleteRowStatement(group.getMonth(), child.getDay(), child.getPersonName()));
+
+        		fetchBirthdays();
+
+        		Toast.makeText(instance, "Deleted", Toast.LENGTH_SHORT).show();
+        	}
+        	catch(Exception e)
+        	{
+        		Log.w("", e.getMessage());
+        	}
         	/*
         	TextView childView = (TextView) info.targetView;
         	
