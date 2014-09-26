@@ -62,14 +62,14 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
             View convertView, ViewGroup parent) {
     	
-        String children = (String) getChild(groupPosition, childPosition);
+        Child children = (Child) getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.child_layout, null);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.tvChild);
-        tv.setText(children);
+        tv.setText(children.toString());
 
         return convertView;
     }
@@ -107,7 +107,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         
         //Group g = groups.get(groupPosition);
         
-        ((TextView) convertView).setText(group.monthName);
+        ((TextView) convertView).setText(group.getMonthName());
         return convertView;
     }
 

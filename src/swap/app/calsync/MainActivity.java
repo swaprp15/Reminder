@@ -37,13 +37,12 @@ public class MainActivity extends Activity
 	
 	private static SQLiteDatabase db;
 	
-	static MyExpandableListAdapter adapter;
+	//static MyExpandableListAdapter adapter;
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     
 	static ArrayList<Group> groups = new ArrayList<Group>();
 
-	static String monthsArr[] = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	
 	static ExpandableListView listView;
 	
@@ -92,7 +91,7 @@ public class MainActivity extends Activity
 
 		 //listView.setChoiceMode(choiceMode)
 		 
-		 listView.setAdapter(adapter);
+		 //listView.setAdapter(adapter);
 		 
 		registerForContextMenu(listView);
 		 
@@ -140,9 +139,11 @@ public class MainActivity extends Activity
         	
         	//Toast.makeText(this, item.getTitle() + " was selected", Toast.LENGTH_LONG).show();
         	
-        	String childName = groups.get(groupPosition).children.get(childPosition);
+        	Group group = groups.get(groupPosition);
         	
-        	Toast.makeText(this, childName + " was long pressed.", Toast.LENGTH_LONG).show();
+        	 Child child = groups.get(groupPosition).children.get(childPosition);
+        	 
+        	Toast.makeText(this, child.getPersonName() + " " + group.getMonth() + " was long pressed.", Toast.LENGTH_LONG).show();
         	
         	/*
         	TextView childView = (TextView) info.targetView;
@@ -185,6 +186,62 @@ public class MainActivity extends Activity
     			    sortOrder                                 // The sort order
     			    );
     			
+    			
+    			List<Group> records = new ArrayList<Group>();
+    			
+    			for(int i = 0; i < 13; i++)
+    			{
+    				records.add(new Group(i));
+    				System.out.println("Added record - " + i);
+    			}
+    			
+    			int month;
+    			
+    			while(cursor.moveToNext())
+    			{
+    				month = cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH));
+    				
+    				// Skipping any mischievous entry in the database which could cause array out of bound exception
+    				if(month > 12)
+    					continue;
+    				
+    				/*
+    				if(records.get(month) == null)
+    				{
+    					records.add(month, new ArrayList<String>());
+    				}
+    				*/
+    				
+    				int day = cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY));
+    				
+    				String name = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME));
+    				
+    				Group group = records.get(month);
+    				
+    				Child child = new Child(name, day);
+    				
+    				group.children.add(child);
+    				
+    				/*
+    				String dayString;
+    				
+    				if(day == 1 || day == 21 || day == 31)
+    					dayString = day + "st";
+    				else if (day == 2 || day == 22)
+    					dayString = day + "nd";
+    				else if(day == 3 || day == 23)
+    					dayString = day + "rd";
+    				else
+    					dayString = day + "th";
+    				
+    				
+    				records.get(month).add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)) + " " + dayString );
+    				*/
+    				System.out.println("From DB - Name - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
+    				System.out.println("From DB - Date - " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH)));
+    			}
+    			
+    			/*
     			List<ArrayList<String>> records = new ArrayList<ArrayList<String>>();
     			
     			for(int i = 0; i < 13; i++)
@@ -230,6 +287,7 @@ public class MainActivity extends Activity
     				System.out.println("From DB - Name - " + cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME)));
     				System.out.println("From DB - Date - " + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_DAY)) + "/" + cursor.getInt(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_MONTH)));
     			}
+    			*/
     			
     			
     			
@@ -237,13 +295,26 @@ public class MainActivity extends Activity
     			
     			int count = 0;
     			
+    			
+    			// Used array list intead os sparse so clear earlier
+    			groups.clear();
+    			
+    			// Now put the above groups only if it has at least one children
+    			
+    			for(int i = 1; i < 13; i++)
+    			{
+    				if(records.get(i).children.size() > 0)
+    					groups.add(records.get(i));
+    			}
+    			
+    			/*
     			for(int i = 1; i < 13; i++)
     			{
     				System.out.println("in loop i=" + i);
     				
-    				Group group = new Group(monthsArr[i]);
+    				Group group = new Group(i);
     				
-    				System.out.println("Month - " + monthsArr[i]);
+    				System.out.println("Month - " + group.getMonthName());
     				
     		          for (int j = 0; j < records.get(i).size(); j++) {
     		        	  System.out.println("In loop j = " + j);
@@ -254,6 +325,7 @@ public class MainActivity extends Activity
     		        	  //groups.append(count++, group);
     		        	  groups.add(group);
     			}
+    			*/
     		
     			System.out.println("Filled Groups");
     			
@@ -264,9 +336,11 @@ public class MainActivity extends Activity
     			// * 
     			// * With a single text view for child
     		    
-    		    adapter = new MyExpandableListAdapter(instance,
+    			MyExpandableListAdapter adapter = new MyExpandableListAdapter(instance,
     		        groups);
     		    
+    			listView.setAdapter(adapter);
+    			
     		    /*
     			listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
 
@@ -311,7 +385,7 @@ public class MainActivity extends Activity
     	}
     }
     
-    
+    /*
     public void createData() {
         for (int j = 0; j < 5; j++) {
           Group group = new Group("Test " + j);
@@ -322,6 +396,7 @@ public class MainActivity extends Activity
           groups.add(group);
         }
       }
+      */
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
