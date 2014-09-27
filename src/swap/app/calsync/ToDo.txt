@@ -16,8 +16,10 @@ Added successfully message
 
 To Do tasks-
 
-Delete record
-Date to the right
+Edit record
+
+Dont allow duplicates
+
 Add call button
 Add age
 When clicked on notification should open up a dialog containing info like age, call button
@@ -31,8 +33,6 @@ FB Sync
 Birthday or Anniversary
 
 Instead of full date keep only month and date
-
-Put the date on the right side
 
 Delete or edit existing birthday.... long press on record..
 

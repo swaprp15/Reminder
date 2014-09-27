@@ -136,16 +136,23 @@ public class AddBirthdayActivity extends FragmentActivity {
 		// Gets the data repository in write mode
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-		System.out.println("Created database");
+		System.out.println("Created database. Get the fields");
 		
 		EditText editDate = (EditText) findViewById(R.id.editDate);
+		
+		System.out.println("Got the date");
+		
 		EditText editName = (EditText) findViewById(R.id.editName);
+		
+		System.out.println("Got name and date");
 		
 		if(editName.getText().toString() == null || editName.getText().toString().isEmpty())
 		{
 			Toast.makeText(this, "Please enter a valid name", Toast.LENGTH_SHORT).show();
 			return;
 		}
+		
+		System.out.println("Validation successful for name");
 		
 		DayMonth dayMonth = new DayMonth();
 		
@@ -155,12 +162,16 @@ public class AddBirthdayActivity extends FragmentActivity {
 			return;
 		}
 		
+		System.out.println("Validation successful for date");
+		
 		// Create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
 		values.put(FeedEntry.COLUMN_NAME, editName.getText().toString());
 		values.put(FeedEntry.COLUMN_MONTH, dayMonth.getMonth());
 		values.put(FeedEntry.COLUMN_DAY, dayMonth.getDay());
 
+		System.out.println("Before executing query");
+		
 		// Insert the new row, returning the primary key value of the new row
 		long newRowId;
 		newRowId = db.insert(
