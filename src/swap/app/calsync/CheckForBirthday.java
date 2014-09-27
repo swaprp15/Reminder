@@ -104,7 +104,7 @@ public class CheckForBirthday extends Application implements Runnable {
 		}
 		catch(Exception e)
 		{
-			Toast.makeText(MyApp.getInstance().getApplicationContext(),  "Error!" , Toast.LENGTH_LONG).show(); // For example
+			//Toast.makeText(MyApp.getInstance().getApplicationContext(),  "Error!" , Toast.LENGTH_LONG).show(); // For example
 			
 		}
 		finally

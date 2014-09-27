@@ -232,7 +232,7 @@ public class AddBirthdayActivity extends FragmentActivity {
 			int day = Integer.parseInt(parts[0]);
 			int month = Integer.parseInt(parts[1]);		
 			
-			if(day < 0 || day > 31 || month < 0 || month > 12)
+			if(day <= 0 || day > 31 || month <= 0 || month > 12)
 				return false;
 			
 			// February
