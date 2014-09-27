@@ -1,31 +1,60 @@
-<LinearLayout android:id="@+id/LinearLayout01"
-	android:layout_width="fill_parent" android:layout_height="45dip"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="horizontal">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout01"
+    android:layout_width="fill_parent"
+    android:layout_height="45dip"
+    android:orientation="horizontal"
+    android:background="@color/child_layout" >
+<!-- 
+    <TextView
+        android:id="@+id/tvChild"
+        android:layout_width="230dp"
+        android:layout_height="45dip"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:text="@string/children_name"
+        android:textColor="#ffCCCC22"
+        android:textSize="17sp"
+        android:textStyle="bold" >
+    </TextView>
 
-	<TextView
-	    android:id="@+id/tvChild"
-	    android:layout_width="234dp"
-	    android:layout_height="45dip"
-	    android:gravity="center_vertical"
-	    android:paddingLeft="5dip"
-	    android:paddingRight="5dip"
-	    android:text="@string/children_name"
-	    android:textColor="#ffCCCC22"
-	    android:textSize="17dip"
-	    android:textStyle="bold" >
-</TextView>
+    <TextView
+        android:id="@+id/tvChildDay"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_weight="0.48"
+        android:gravity="right"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:text="@string/children_day"
+        android:textColor="#ffCCCC22"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+-->
+<TextView
+        android:id="@+id/tvChild"
+        android:layout_width="230dp"
+        android:layout_height="45dip"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:text="@string/children_name"
+        android:textColor="#5AAE95"
+        android:textSize="17sp"
+        android:textStyle="bold" >
+    </TextView>
 
-	<TextView
-	    android:id="@+id/tvChildDay"
-	    android:layout_width="fill_parent"
-	    android:layout_height="45dip"
-	    android:gravity="right"
-	    android:paddingLeft="5dip"
-	    android:paddingRight="5dip"
-	    android:text="@string/children_day"
-	    android:textColor="#ffCCCC22"
-	    android:textSize="17dip"
-	    android:textStyle="bold" />
-
+    <TextView
+        android:id="@+id/tvChildDay"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_weight="0.48"
+        android:gravity="right"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:text="@string/children_day"
+        android:textColor="#5AAE95"
+        android:textSize="17sp"
+        android:textStyle="bold"
+         />
 </LinearLayout>

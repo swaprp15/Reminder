@@ -3,8 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".MainActivity" >
-
+    tools:context=".MainActivity"
+    android:background="@color/group_layout" >
+	
     <ExpandableListView
         android:id="@+id/expandableListView1"
         android:layout_width="match_parent"

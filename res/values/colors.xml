@@ -1,5 +1,8 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-
+    <color name="child_layout">#2B3431</color>
+    <color name="group_layout">#46484A</color>
+    <!-- <color name="group_text">#C0C6CB</color>-->
+	<color name="group_text">#ffCCCC22</color>
 </resources>

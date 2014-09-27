@@ -2,6 +2,7 @@
 <!-- add this if you want image to the right
 	 android:drawableRight="@drawable/ic_launcher"
      -->
+<!-- 
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/textView1"
@@ -11,12 +12,27 @@
     android:gravity="left"
     android:paddingLeft="32dp"
     android:paddingTop="8dp"
-    android:text="Test"
+    android:text="@string/test_string"
     android:textSize="18sp"
     android:textAlignment="textEnd"
     android:textStyle="bold"
-    android:background="#E6E6E6"
-     >
-    
+    android:background="#E6E6E6"    
 
 </CheckedTextView>
+-->
+
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/textView1"
+    android:layout_width="wrap_content"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_marginLeft="8dp"
+    android:gravity="left"
+    android:paddingLeft="32dp"
+    android:paddingTop="8dp"
+    android:text="@string/test_string"
+    android:textSize="18sp"
+    android:textAlignment="textEnd"
+    android:textStyle="bold"
+    android:background="@color/group_layout"
+    android:textColor="@color/group_text" ></CheckedTextView>
