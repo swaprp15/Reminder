@@ -19,23 +19,32 @@ public class CheckForBirthday extends Application implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		checkAndNotifyBirthday();
-		
+		try
+		{
+			checkAndNotifyBirthday();
+		}
+		catch(Exception e)
+		{
+			Log.e("", e.getMessage());
+		}
 	}
 	
 	public void checkAndNotifyBirthday()
 	{
 		
-		System.out.println("In check for birthday");
+		try
+		{
 		
-		Calendar c = Calendar.getInstance(); 
-		
-		System.out.println(c.get(Calendar.SECOND));
-		
-		
-		int month = c.get(Calendar.MONTH);
-		int day = c.get(Calendar.DATE);
-		month++;
+			System.out.println("In check for birthday");
+			
+			Calendar c = Calendar.getInstance(); 
+			
+			System.out.println(c.get(Calendar.SECOND));
+			
+			
+			int month = c.get(Calendar.MONTH);
+			int day = c.get(Calendar.DATE);
+			month++;
 		
 		//Toast.makeText(MyApp.getInstance().getApplicationContext(), "Checking for " + day + "/" + month , Toast.LENGTH_LONG).show(); // For example
         
@@ -46,8 +55,7 @@ public class CheckForBirthday extends Application implements Runnable {
 		*/
 		// Here check for any birthdays today and give notifications
 		
-		try
-		{
+		
 		
 			DBHelper mDbHelper = new DBHelper(MyApp.getInstance().getApplicationContext());
 			
@@ -105,12 +113,12 @@ public class CheckForBirthday extends Application implements Runnable {
 		catch(Exception e)
 		{
 			//Toast.makeText(MyApp.getInstance().getApplicationContext(),  "Error!" , Toast.LENGTH_LONG).show(); // For example
-			
+			Log.e("", e.getMessage());
 		}
 		finally
 		{
 			
 		}
-		}
+	}
 
 }

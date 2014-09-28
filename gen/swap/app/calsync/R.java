@@ -20,6 +20,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class color {
         public static final int black_overlay=0x7f040000;
+        public static final int child_layout=0x7f040001;
+        public static final int group_layout=0x7f040002;
+        /**  <color name="group_text">#C0C6CB</color>
+         */
+        public static final int group_text=0x7f040003;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -36,16 +41,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020001;
         public static final int ic_launcher_old=0x7f020002;
         public static final int notification_icon=0x7f020003;
+        public static final int notification_icon_adjusted=0x7f020004;
     }
     public static final class id {
         public static final int LinearLayout01=0x7f09000b;
-        public static final int action_add=0x7f090011;
-        public static final int action_settings=0x7f09000f;
-        public static final int buttonAdd=0x7f090003;
-        public static final int buttonCancel=0x7f090004;
-        public static final int delete=0x7f090010;
+        public static final int action_add=0x7f090012;
+        public static final int action_settings=0x7f090010;
+        public static final int buttonAdd=0x7f090004;
+        public static final int buttonCancel=0x7f090005;
+        public static final int delete=0x7f090011;
         public static final int dummy_button=0x7f090008;
-        public static final int editDate=0x7f090005;
+        public static final int editDate=0x7f090003;
         public static final int editName=0x7f090002;
         public static final int editText1=0x7f090009;
         public static final int expandableListView1=0x7f09000a;
@@ -53,9 +59,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int fullscreen_content_controls=0x7f090007;
         public static final int textDate=0x7f090001;
         public static final int textName=0x7f090000;
-        public static final int textView1=0x7f09000e;
+        public static final int textView1=0x7f09000f;
         public static final int tvChild=0x7f09000c;
-        public static final int tvGroup=0x7f09000d;
+        public static final int tvChildDay=0x7f09000d;
+        public static final int tvGroup=0x7f09000e;
     }
     public static final class layout {
         public static final int activity_add_birthday=0x7f030000;
@@ -79,11 +86,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int action_settings=0x7f060004;
         public static final int app_name=0x7f060000;
         public static final int button_send=0x7f060007;
+        public static final int children_day=0x7f06000c;
+        public static final int children_name=0x7f06000d;
         public static final int delete_menu=0x7f06000b;
         public static final int dummy_button=0x7f060001;
         public static final int dummy_content=0x7f060002;
         public static final int edit_message=0x7f060006;
+        public static final int groups=0x7f06000e;
         public static final int hello_world=0x7f060005;
+        public static final int test_string=0x7f06000f;
         public static final int title_activity_add_birthday=0x7f06000a;
         public static final int title_activity_display_message=0x7f060008;
         public static final int title_activity_main=0x7f060003;

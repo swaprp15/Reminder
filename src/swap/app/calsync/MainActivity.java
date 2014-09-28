@@ -163,7 +163,7 @@ public class MainActivity extends Activity
 
         		fetchBirthdays();
 
-        		Toast.makeText(instance, "Deleted", Toast.LENGTH_SHORT).show();
+        		Toast.makeText(instance, "Deleted!", Toast.LENGTH_SHORT).show();
         	}
         	catch(Exception e)
         	{
