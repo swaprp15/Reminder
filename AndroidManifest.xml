@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="swap.app.calsync"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.swapapp.birthday"
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -16,8 +16,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <receiver  android:process=":remote" android:name="Alarm"></receiver>
-        <receiver android:name=".AutoStart">
+        <receiver  android:process=":remote" android:name="swap.app.calsync.Alarm"></receiver>
+        <receiver android:name="swap.app.calsync.AutoStart">
     		<intent-filter>
         		<action android:name="android.intent.action.BOOT_COMPLETED"></action>
     		</intent-filter>
@@ -53,7 +53,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="swap.app.calsync.MainActivity" />
         </activity>
-        <service android:name=".BackgroundService"
+        <service android:name="swap.app.calsync.BackgroundService"
             	 android:exported="false"></service>
     </application>
 

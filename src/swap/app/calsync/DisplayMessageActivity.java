@@ -9,6 +9,7 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import com.swapapp.birthday.R;
 
 public class DisplayMessageActivity extends Activity {
 

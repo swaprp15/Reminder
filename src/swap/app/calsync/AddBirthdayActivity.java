@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.swapapp.birthday.R;
 
 
 class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
